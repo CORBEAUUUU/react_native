@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Bouton from "../ui/Bouton";
 import { AntDesign } from "@expo/vector-icons";
+import InputWithError from "../ui/InputWithError";
+import { colors } from "../../libs/variables";
 const LoginForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -24,32 +26,33 @@ const LoginForm = () => {
 			return;
 		}
 		setEmailError(!email.includes("@") ? "Email incorrect" : "");
-		setPasswordError(
-			password.length < 6 ? "Mot de passe trop court logi(Minimum 6)" : ""
-		);
+		setPasswordError(password.length < 6 ? "Mot de passe trop court! (Minimum 6)" : "");
 	};
+	const query = matchMedia("(max-width: 1000px)");
 
+	console.log(query);
 	return (
 		<View style={styles.container}>
-			<TextInput
-				keyboardType="email-address"
-				placeholder="Email"
-				onChangeText={handleEmail}
-				value={email}
+			<InputWithError
+				holder="Entrez votre email"
+				valeur={email}
+				action={handleEmail}
+				type={"email-address"}
+				errorMessage={emailError}
 			/>
-			<Text>{emailError}</Text>
 
-			<TextInput
-				placeholder="Mot de passe"
-				onChangeText={handlePassword}
-				value={password}
-				secureTextEntry={true}
+			<InputWithError
+				holder="Entrez votre mot de passe"
+				valeur={password}
+				action={handlePassword}
+				type={"default"}
+				errorMessage={passwordError}
+        isPassword={true}
 			/>
-			<Text>{passwordError}</Text>
 
 			<Bouton action={submit}>
-				<AntDesign name="login" size={24} color="black" />
-				<Text>Se connecter</Text>
+				<AntDesign name="login" size={20} color={colors.light_4} />
+				<Text style={{color: colors.light_4}}>Se connecter</Text>
 			</Bouton>
 		</View>
 	);
