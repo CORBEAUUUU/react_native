@@ -23,11 +23,11 @@ export default function Auth() {
 }
 
 const styles = StyleSheet.create({
-  link:{
-    color: colors.primary_2,
-    textDecorationLine: "underline",
-    textDecorationStyle: "solid",
-    textDecorationColor: "#000",
-    fontWeight:"bold"
-  }
-}) 
+	link: {
+		color: colors.primary_2,
+		textDecorationLine: "underline",
+		textDecorationStyle: "solid",
+		textDecorationColor: "#000",
+		fontWeight: "bold",
+	},
+});

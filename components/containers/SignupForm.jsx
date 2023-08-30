@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Bouton from "../ui/Bouton";
 import { AntDesign } from "@expo/vector-icons";
 import InputWithError from "../ui/InputWithError";
+import { colors } from "../../libs/variables";
+import { UtilisateurContext } from "../../App";
+
 export default function SignupForm() {
 	// Créer les variables
 	const [email, setEmail] = useState("");
@@ -13,6 +16,9 @@ export default function SignupForm() {
 	const [usernameError, setUsernameError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
 	const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const objet = useContext(UtilisateurContext);
+
 
 	// Créer les fonction qui s'executent quand l'utilisateur tape dans les champs
 	const handleEmail = (text) => {
@@ -42,7 +48,7 @@ export default function SignupForm() {
 			password === confirmPassword
 		) {
 			// Envoyer une requete vers la backend
-			alert("Inscription réussie");
+			objet.setUtilisateur({email: email, username: username})
 			return;
 		}
 		setEmailError(!email.includes("@") ? "Email incorrect" : "");
@@ -86,13 +92,13 @@ export default function SignupForm() {
 				valeur={confirmPassword}
 				action={handleConfirmPassword}
 				type={"default"}
-				holder={"Confirmez votre mot de passe"}
+				holder={"Confirmez mot de passe"}
 				errorMessage={confirmPasswordError}
 				isPassword
 			/>
 			<Bouton action={submit}>
-				<AntDesign name="login" size={24} color="black" />
-				<Text>S'inscrire</Text>
+				<AntDesign name="login" size={24} color={colors.light_4} />
+				<Text style={{color: colors.light_4}} >S'inscrire</Text>
 			</Bouton>
 		</View>
 	);

@@ -1,17 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { createContext, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import Profil from "./components/pages/Profil";
 import Auth from "./components/pages/Auth";
+
+export const UtilisateurContext = createContext();
 
 export default function App() {
 	const [user, setUser] = useState();
 
-	return <View style={styles.container} >{user ? <Profil /> : <Auth />}</View>;
+	return (
+		<View style={styles.container}>
+			<UtilisateurContext.Provider value={{ utilisateur: user, setUtilisateur: setUser }}>
+				{user ? <Profil /> : <Auth />}
+			</UtilisateurContext.Provider>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-    width:"100%"
-  },
+		width: "100%",
+	},
 });
