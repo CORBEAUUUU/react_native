@@ -28,9 +28,7 @@ const LoginForm = () => {
 		setEmailError(!email.includes("@") ? "Email incorrect" : "");
 		setPasswordError(password.length < 6 ? "Mot de passe trop court! (Minimum 6)" : "");
 	};
-	const query = matchMedia("(max-width: 1000px)");
 
-	console.log(query);
 	return (
 		<View style={styles.container}>
 			<InputWithError

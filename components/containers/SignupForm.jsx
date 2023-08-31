@@ -4,7 +4,8 @@ import Bouton from "../ui/Bouton";
 import { AntDesign } from "@expo/vector-icons";
 import InputWithError from "../ui/InputWithError";
 import { colors } from "../../libs/variables";
-import { UtilisateurContext } from "../../App";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UtilisateurContext } from "../context/UtilisateurContext";
 
 export default function SignupForm() {
 	// Créer les variables
@@ -17,8 +18,7 @@ export default function SignupForm() {
 	const [passwordError, setPasswordError] = useState("");
 	const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  const objet = useContext(UtilisateurContext);
-
+	const objet = useContext(UtilisateurContext);
 
 	// Créer les fonction qui s'executent quand l'utilisateur tape dans les champs
 	const handleEmail = (text) => {
@@ -39,7 +39,7 @@ export default function SignupForm() {
 	};
 
 	// Fonction qui s'execute quand l'utilisateur submit
-	const submit = () => {
+	const submit = async () => {
 		if (
 			email.includes("@") &&
 			username.length >= 3 &&
@@ -48,7 +48,14 @@ export default function SignupForm() {
 			password === confirmPassword
 		) {
 			// Envoyer une requete vers la backend
-			objet.setUtilisateur({email: email, username: username})
+			// Enregistrer les données entrées dans le local storage
+      await AsyncStorage.setItem(
+				"user",
+				JSON.stringify({ email: email, username: username })
+			);
+      
+      // Enregistrer les données dans la variable d'état
+			objet.setUtilisateur({ email: email, username: username });
 			return;
 		}
 		setEmailError(!email.includes("@") ? "Email incorrect" : "");
@@ -98,7 +105,7 @@ export default function SignupForm() {
 			/>
 			<Bouton action={submit}>
 				<AntDesign name="login" size={24} color={colors.light_4} />
-				<Text style={{color: colors.light_4}} >S'inscrire</Text>
+				<Text style={{ color: colors.light_4 }}>S'inscrire</Text>
 			</Bouton>
 		</View>
 	);
