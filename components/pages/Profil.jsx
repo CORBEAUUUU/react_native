@@ -12,7 +12,10 @@ import defaultAvatar from "../../assets/default-avatar.png";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { UtilisateurContext } from "../context/UtilisateurContext";
+import Bouton from "../ui/Bouton";
+import { ScrollView } from "react-native";
 export default function Profil(props) {
+  console.log(props);
 	const objet = useContext(UtilisateurContext);
 	const size = useWindowDimensions();
 
@@ -21,12 +24,19 @@ export default function Profil(props) {
 		objet.setUtilisateur({ ...objet.utilisateur, avatar: resultat.assets[0] });
 	};
 
-  const goToCamera = ()=>{
-    props.navigation.push("camera");
-  }
+	const goToCamera = () => {
+		props.navigation.push("camera");
+	};
+
+	const goToEdit = () => {
+		props.navigation.push("edit");
+	};
+	const goToCarte = () => {
+		props.navigation.push("map");
+	};
 
 	return (
-		<View style={{width:300, height:300}}>
+		<ScrollView >
 			<View>
 				<Image
 					style={{
@@ -67,8 +77,14 @@ export default function Profil(props) {
 							: "Veuillez entrez une description"}
 					</Text>
 				</View>
+				<Bouton action={goToEdit}>
+					<Text>Modifier vos informations</Text>
+				</Bouton>
+				<Bouton action={goToCarte}>
+					<Text>Ouvrez la carte</Text>
+				</Bouton>
 			</View>
-		</View>
+		</ScrollView>
 	);
 }
 

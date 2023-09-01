@@ -2,6 +2,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Profil from "../pages/Profil";
 import Cam from "../pages/Cam";
 import { colors } from "../../libs/variables";
+import EditInfos from "../pages/EditInfos";
+import Carte from "../pages/Carte";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +32,20 @@ const ProfilSTack = () => {
 				component={Cam}
 				options={{
 					title: "Prenez une photo",
+				}}
+			/>
+			<Stack.Screen
+				name="edit"
+				component={EditInfos}
+				options={{
+					title: "Modifier Vos informations",
+				}}
+			/>
+			<Stack.Screen
+				name="map"
+				component={Carte}
+				options={{
+					title: "Ou habitez-vous?",
 				}}
 			/>
 		</Stack.Navigator>
